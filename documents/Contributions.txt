@@ -1,0 +1,19 @@
+INDIVIDUAL CONTRIBUTIONS FOR MILESTONE 1:
+
+*  Brainstorming- Entire Team
+*  Documentation and Grammar design -Veda and Kavya
+*  Formulating the Design - Satvik
+*  Information about Interpreter - Sunil
+*  Gathered knowledge about Parser - Entire Team
+
+PROPOSED INDIVIDUALS CONTRIBUTIONS FOR MILESTONE 2:
+
+1. Will be working on Grammar Design – Veda, Kavya, Satvik, Sunil
+2. Setting up IDE – Satvik, Kavya
+3. Creating the Lexer and Parser integration – Veda, Sunil
+4. Working with Compiler and constants – Veda, Satvik
+5. Run-time execution and unit testing – Sunil, Kavya 
+6. Integrating all files – Veda, Kavya, Satvik, Sunil
+7. Creation of Sample programs and testing- Veda, Kavya
+8. Documentation and YouTube video – Satvik, Sunil
+9. GitHub Repo – Satvik, Sunil, Veda, Kavya
