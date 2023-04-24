@@ -4,7 +4,7 @@ kvs(Lexername, Filename) :-
     term_to_atom(Y, X),
     write('kvs Programming Language v1.0'), nl,
     write('SER 502 - Spring 2023 - Team 28'), nl,
-    write('@Authors - Vedasree Bodavula, Kavya Alla, Satvik Chamudupati'), nl, nl,
+    write('@Authors - Vedasree Bodavula, Satvik Chemudupati, Kavya Alla, S'), nl, nl,
     program(Tree, Y, []),
     write('Executing......'), write(Filename), nl, nl,
     write('List of Tokens:'), nl, write(Y),nl, nl,
@@ -348,137 +348,173 @@ eval_display(t_display(X), Env, Env) :-
     writeln(Val).
 
 %to evaluate if condition
-if_eval(t_if_cond(X,Y), Env,FinalEnv):- 
-    ((eval_condition(X, Env, NewEnv,true);eval_boolean(X, Env, NewEnv,true)),eval_block(Y, NewEnv,FinalEnv)).
-if_eval(t_if_cond(X,_Y), Env, NewEnv):- 
-    eval_condition(X, Env, NewEnv,false);eval_boolean(X, Env, NewEnv,false).
-if_eval(t_if_cond(X,Y,_Z), Env,FinalEnv):- 
-    (eval_condition(X, Env, NewEnv,true);eval_boolean(X, Env, NewEnv,true)),
-    eval_block(Y, NewEnv,FinalEnv).
-if_eval(t_if_cond(X,_Y,Z), Env,FinalEnv):- 
-    (eval_condition(X, Env, NewEnv,false);eval_boolean(X, Env, NewEnv,false)),
-    eval_block(Z, NewEnv,FinalEnv).
+if_eval(t_if_cond(Condition, IfBlock), Env, FinalEnv) :- 
+    ((eval_condition(Condition, Env, NewEnv, true); eval_boolean(Condition, Env, NewEnv, true)),
+     eval_block(IfBlock, NewEnv, FinalEnv)).
+     
+if_eval(t_if_cond(Condition, _IfBlock), Env, NewEnv) :- 
+    eval_condition(Condition, Env, NewEnv, false); eval_boolean(Condition, Env, NewEnv, false).
+    
+if_eval(t_if_cond(Condition, IfBlock, ElseBlock), Env, FinalEnv) :- 
+    (eval_condition(Condition, Env, NewEnv, true); eval_boolean(Condition, Env, NewEnv, true)),
+    eval_block(IfBlock, NewEnv, FinalEnv).
+    
+if_eval(t_if_cond(Condition, _IfBlock, ElseBlock), Env, FinalEnv) :- 
+    (eval_condition(Condition, Env, NewEnv, false); eval_boolean(Condition, Env, NewEnv, false)),
+    eval_block(ElseBlock, NewEnv, FinalEnv).
 
 %to evaluate the while loop
-eval_while(t_whileloop(X,Y), Env,FinalEnv):- 
-    eval_boolean(X, Env, NewEnv,true),
-    eval_block(Y, NewEnv, NewEnv1),
-    eval_while(t_whileloop(X,Y), NewEnv1,FinalEnv).
-eval_while(t_whileloop(X,_Y), Env, Env) :- 
-    eval_boolean(X, Env, Env,false).
-eval_while(t_whileloop(X,Y), Env,FinalEnv):- 
-    eval_condition(X, Env, NewEnv,true),
-    eval_block(Y, NewEnv, NewEnv1),
-    eval_while(t_whileloop(X,Y), NewEnv1,FinalEnv).
-eval_while(t_whileloop(X,_Y), Env, Env) :- 
-    eval_condition(X, Env, Env,false).
+evaluate_while_loop(t_whileloop(Condition, Body), Env, FinalEnv):- 
+    evaluate_boolean(Condition, Env, NewEnv, true),
+    evaluate_block(Body, NewEnv, NewEnv1),
+    evaluate_while_loop(t_whileloop(Condition, Body), NewEnv1, FinalEnv).
+    
+evaluate_while_loop(t_whileloop(Condition, _Body), Env, Env) :- 
+    evaluate_boolean(Condition, Env, Env, false).
+    
+evaluate_while_loop(t_whileloop(Condition, Body), Env, FinalEnv):- 
+    evaluate_condition(Condition, Env, NewEnv, true),
+    evaluate_block(Body, NewEnv, NewEnv1),
+    evaluate_while_loop(t_whileloop(Condition, Body), NewEnv1, FinalEnv).
+    
+evaluate_while_loop(t_whileloop(Condition, _Body), Env, Env) :- 
+    evaluate_condition(Condition, Env, Env, false).
 
 %to evaluate the forloop
-eval_forloop(t_forloop(X,Y,Z,W), Env,FinalEnv):- 
-    eval_declare(X, Env, NewEnv),
-    loops(Y,Z,W, NewEnv,FinalEnv).
-eval_forloop(t_forloop(X,Y,Z,W), Env,FinalEnv):- 
-    eval_assign(X, Env, NewEnv),
-    loops(Y,Z,W, NewEnv,FinalEnv).
-loops(X,Y,Z, Env,FinalEnv) :- 
-    eval_condition(X, Env, Env,true),
-    eval_block(Z, Env, NewEnv),
-    (eval_iter(Y, NewEnv, NewEnv1);eval_expr(Y, NewEnv, NewEnv1)),
-    loops(X,Y,Z, NewEnv1,FinalEnv).
-loops(X,_Y,_Z, Env, Env) :- 
-    eval_condition(X, Env, Env,false).
-loops(X,Y,Z, Env,FinalEnv) :- 
-    eval_boolean(X, Env, Env,true),
-    eval_block(Z, Env, NewEnv),
-    (eval_iter(Y, NewEnv, NewEnv1);eval_expr(Y, NewEnv, NewEnv1)),
-    loops(X,Y,Z, NewEnv1,FinalEnv).
-loops(X,_Y,_Z, Env, Env) :- 
-    eval_boolean(X, Env, Env,false).
+eval_forloop(for_loop(Declaration, Condition, Iteration, Block), Env, FinalEnv) :- 
+    eval_declaration(Declaration, Env, NewEnv1),
+    loops(Condition, Iteration, Block, NewEnv1, FinalEnv).
+
+eval_forloop(for_loop(Assignment, Condition, Iteration, Block), Env, FinalEnv) :- 
+    eval_assignment(Assignment, Env, NewEnv1),
+    loops(Condition, Iteration, Block, NewEnv1, FinalEnv).
+
+loops(Condition, Iteration, Block, Env, FinalEnv) :- 
+    eval_condition(Condition, Env, Env, true),
+    eval_block(Block, Env, NewEnv1),
+    (eval_iteration(Iteration, NewEnv1, NewEnv2); eval_expression(Iteration, NewEnv1, NewEnv2)),
+    loops(Condition, Iteration, Block, NewEnv2, FinalEnv).
+
+loops(Condition, _, _, Env, Env) :- 
+    eval_condition(Condition, Env, Env, false).
+
+loops(Boolean, Iteration, Block, Env, FinalEnv) :- 
+    eval_boolean(Boolean, Env, Env, true),
+    eval_block(Block, Env, NewEnv1),
+    (eval_iteration(Iteration, NewEnv1, NewEnv2); eval_expression(Iteration, NewEnv1, NewEnv2)),
+    loops(Boolean, Iteration, Block, NewEnv2, FinalEnv).
+
+loops(Boolean, _, _, Env, Env) :- 
+    eval_boolean(Boolean, Env, Env, false).
 
 %to evaluate the forrange
-eval_forrange(t_forrange(X,Y,Z,W), Env,FinalEnv):- 
-    eval_char_tree(X,Id),
-    ((eval_numtree(Y, Val),update(int,Id, Val, Env, NewEnv));
-    (lookup(Y, Env, Val),update(int,Id, Val, Env, NewEnv))),
-    ((eval_numtree(Z,N));
-    (eval_char_tree(Z,Id1),lookup(Id1, NewEnv,N))),
-    looping(Id,N,W, NewEnv,FinalEnv).
-looping(X,Z,W, Env,FinalEnv):- 
-    lookup(X, Env, Val),
-    Val < Z, 
-    eval_block(W, Env, NewEnv),
-    Val1 is Val + 1,
-    update(int, X, Val1, NewEnv, NewEnv1),
-    looping(X,Z,W, NewEnv1,FinalEnv).
-looping(X,Z,_W, Env, Env) :- 
-    lookup(X, Env, Val), 
-    Val >= Z.
+eval_forrange(for_range(Variable, Start, End, Block), Env, FinalEnv) :-
+    eval_char_tree(Variable, VariableId),
+    (
+        (eval_numtree(Start, StartVal), update(int, VariableId, StartVal, Env, NewEnv));
+        (lookup(Start, Env, StartVal), update(int, VariableId, StartVal, Env, NewEnv))
+    ),
+    (
+        (eval_numtree(End, EndVal));
+        (eval_char_tree(End, EndVarId), lookup(EndVarId, NewEnv, EndVal))
+    ),
+    looping(VariableId, EndVal, Block, NewEnv, FinalEnv).
+
+looping(VariableId, EndVal, Block, Env, FinalEnv) :-
+    lookup(VariableId, Env, CurrentVal),
+    CurrentVal < EndVal,
+    eval_block(Block, Env, NewEnv),
+    NextVal is CurrentVal + 1,
+    update(int, VariableId, NextVal, NewEnv, NewEnv1),
+    looping(VariableId, EndVal, Block, NewEnv1, FinalEnv).
+
+looping(VariableId, EndVal, _, Env, Env) :-
+    lookup(VariableId, Env, CurrentVal),
+    CurrentVal >= EndVal.
 
 %to evaluate ternary condition
-eval_terncond(t_tern_cond(X,Y,_Z), Env,FinalEnv):- 
-    (eval_condition(X, Env, NewEnv,true);eval_boolean(X, Env, NewEnv,true)),
-    eval_statements(Y, NewEnv,FinalEnv).
-eval_terncond(t_tern_cond(X,_Y,Z), Env,FinalEnv):- 
-    (eval_condition(X, Env, NewEnv,false);eval_boolean(X, Env, NewEnv,false)),
-    eval_statements(Z, NewEnv,FinalEnv).
+eval_terncond(t_tern_cond(Condition, TrueStatements, _FalseStatements), Env, FinalEnv) :-
+    (eval_condition(Condition, Env, NewEnv, true); eval_boolean(Condition, Env, NewEnv, true)),
+    eval_statements(TrueStatements, NewEnv, FinalEnv).
+
+eval_terncond(t_tern_cond(Condition, _TrueStatements, FalseStatements), Env, FinalEnv) :-
+    (eval_condition(Condition, Env, NewEnv, false); eval_boolean(Condition, Env, NewEnv, false)),
+    eval_statements(FalseStatements, NewEnv, FinalEnv).
 
 %to evaluate the increment,decrement operation
-eval_iter(t_incre(X), Env, NewEnv) :- 
-    eval_char_tree(X,Id),
-    lookup_type(Id, Env,int),
-    lookup(Id, Env, Val),
-    Val1 is Val + 1, 
-    update(int,Id, Val1, Env, NewEnv).
-eval_iter(t_decre(X), Env, NewEnv) :- 
-    eval_char_tree(X,Id),
-    lookup_type(Id, Env,int),
-    lookup(Id, Env, Val),
-    Val1 is Val - 1, 
-    update(int,Id, Val1, Env, NewEnv).
+eval_iter(t_incre(Variable), Env, NewEnv) :- 
+    eval_char_tree(Variable, VariableId),
+    lookup_type(VariableId, Env, int),
+    lookup(VariableId, Env, VariableValue),
+    NewVariableValue is VariableValue + 1, 
+    update(int, VariableId, NewVariableValue, Env, NewEnv).
+
+eval_iter(t_decre(Variable), Env, NewEnv) :- 
+    eval_char_tree(Variable, VariableId),
+    lookup_type(VariableId, Env, int),
+    lookup(VariableId, Env, VariableValue),
+    NewVariableValue is VariableValue - 1, 
+    update(int, VariableId, NewVariableValue, Env, NewEnv).
 
 %to evaluate addition,subtraction,multiplication and division
-eval_expr(X, Env, NewEnv) :- 
-    eval_assign(X, Env, NewEnv).
-eval_expr(X, Env, NewEnv, Val) :- 
-    eval_term(X, Env, NewEnv, Val).
-eval_expr(t_sub(X,Y), Env, NewEnv, Val):-
-    eval_expr(X, Env, Env1, Val1),
-    eval_term(Y, Env1, NewEnv, Val2),
+evaluate_expression(X, Env, NewEnv) :- 
+    evaluate_assignment(X, Env, NewEnv).
+    
+evaluate_expression(X, Env, NewEnv, Val) :- 
+    evaluate_term(X, Env, NewEnv, Val).
+    
+evaluate_expression(t_sub(X, Y), Env, NewEnv, Val) :-
+    evaluate_expression(X, Env, Env1, Val1),
+    evaluate_term(Y, Env1, NewEnv, Val2),
     Val is Val1 - Val2.
-eval_term(X, Env, NewEnv, Val) :- 
-    eval_term1(X, Env, NewEnv, Val).
-eval_term(t_add(X,Y), Env, NewEnv, Val):-
-    eval_term(X, Env, Env1, Val1),
-    eval_term1(Y, Env1, NewEnv, Val2),
+    
+evaluate_term(X, Env, NewEnv, Val) :- 
+    evaluate_term1(X, Env, NewEnv, Val).
+    
+evaluate_term(t_add(X, Y), Env, NewEnv, Val) :-
+    evaluate_term(X, Env, Env1, Val1),
+    evaluate_term1(Y, Env1, NewEnv, Val2),
     Val is Val1 + Val2.
-eval_term1(X, Env, NewEnv, Val) :- 
-    eval_term2(X, Env, NewEnv, Val).
-eval_term1(t_mult(X,Y), Env, NewEnv, Val):-
-    eval_term1(X, Env, Env1, Val1),
-    eval_term2(Y, Env1, NewEnv, Val2),
+    
+evaluate_term1(X, Env, NewEnv, Val) :- 
+    evaluate_term2(X, Env, NewEnv, Val).
+    
+evaluate_term1(t_mult(X, Y), Env, NewEnv, Val) :-
+    evaluate_term1(X, Env, Env1, Val1),
+    evaluate_term2(Y, Env1, NewEnv, Val2),
     Val is Val1 * Val2.
-eval_term2(X, Env, NewEnv, Val) :- 
-    eval_term3(X, Env, NewEnv, Val).
-eval_term2(t_div(X,Y),  Env, NewEnv, Val):-
-    eval_term2(X, Env, Env1, Val1), 
-    eval_term3(Y, Env1, NewEnv, Val2),
+    
+evaluate_term2(X, Env, NewEnv, Val) :- 
+    evaluate_term3(X, Env, NewEnv, Val).
+    
+evaluate_term2(t_div(X, Y), Env, NewEnv, Val) :-
+    evaluate_term2(X, Env, Env1, Val1), 
+    evaluate_term3(Y, Env1, NewEnv, Val2),
     Val is floor(Val1 / Val2).
-eval_term2(t_mod(X,Y),  Env, NewEnv, Val):-
-    eval_term2(X, Env, Env1, Val1), 
-    eval_term3(Y, Env1, NewEnv, Val2),
-    Val is val1 mod val2.
-eval_term3(X,  Env, NewEnv, Val) :- 
-    eval_num(X, Env, NewEnv, Val).
-eval_term3(t_parentheses(X), Env, NewEnv, Val):-
-    eval_expr(X, Env, NewEnv, Val).
+    
+evaluate_term2(t_mod(X, Y), Env, NewEnv, Val) :-
+    evaluate_term2(X, Env, Env1, Val1), 
+    evaluate_term3(Y, Env1, NewEnv, Val2),
+    Val is Val1 mod Val2.
+    
+evaluate_term3(X, Env, NewEnv, Val) :- 
+    evaluate_number(X, Env, NewEnv, Val).
+    
+evaluate_term3(t_parentheses(X), Env, NewEnv, Val) :-
+    evaluate_expression(X, Env, NewEnv, Val).
 
 %to evaluate the number and string
-eval_num(t_num(Val), Env, Env, Val).
-eval_num(identifier(I), Env, Env, Val) :-
-    term_to_atom(Id,I),
-    lookup(Id, Env, Val).
-eval_numtree(t_num(Val), Val).
-eval_char_tree(identifier(I),Id):- 
-    term_to_atom(Id,I).
-eval_str(t_str(I), Env, Env, Val) :- 
+evaluate_number(t_num(Val), Env, Env, Val).
+
+evaluate_number(identifier(I), Env, Env, Val) :-
+    term_to_atom(I, Id),
+    lookup_variable(Id, Env, Val).
+
+evaluate_number_tree(t_num(Val), Val).
+
+evaluate_character_tree(identifier(I), Id) :-
+    term_to_atom(I, Id).
+
+evaluate_string(t_str(I), Env, Env, Val) :- 
     atom_string(I, Val).
+
