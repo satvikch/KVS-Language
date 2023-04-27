@@ -26,6 +26,8 @@ def lexer(file_path):
                             # Remove quotes and add to result with quotes escaped
                             value = tokval[1:-1].replace('"', '\\"')
                             result += f'"{value}",'
+                        elif tokval.startswith("#"):
+                            continue
                         elif tokval == '!=':
                             result += "'!=',"
                         elif tokval in {')', '(', '{', '}'}:
@@ -38,3 +40,4 @@ def lexer(file_path):
 if __name__ == '__main__':
     file_path = sys.argv[1]
     tokens = lexer(file_path)
+    print(tokens)
