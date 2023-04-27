@@ -1,0 +1,16 @@
+start
+{
+	int x=2;
+	int y=5;
+	int res=0;
+	while(res <= 500)
+	{
+	temp=y;
+	res=x*y;
+	x=temp;
+	y=res;
+	print res;
+	}
+	
+}
+end
