@@ -1,0 +1,14 @@
+start
+{
+
+	for (int a=0; a<3;a++)
+	{
+		for (int b=a*2; b>=0;b = b-2)
+		{
+			print a;
+			print b;
+		}
+	}
+
+}
+terminate
