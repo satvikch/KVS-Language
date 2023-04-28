@@ -1,7 +1,7 @@
 start
 {
 	
-	bool temp = true;
+    bool temp = true;
     int i=8;
     if (i <= 10)
     {
