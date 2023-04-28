@@ -4,7 +4,7 @@ kvs(Lexername, Filename) :-
     term_to_atom(Y, X),
     write('KVS Programming Language v1.0'), nl,
     write('SER 502 - Spring 2023 - Team 28'), nl,
-    write('@Authors - Vedasree Bodavula, Satvik Chemudupati, Kavya Alla, Sunil'), nl, nl,
+    write('@Authors - Vedasree Bodavula, Satvik Chemudupati, Kavya Alla, Sai Sunil Neralla'), nl, nl,
     program(Tree, Y, []),
     write('Executing......'), write(Filename), nl, nl,
     write('List of Tokens:'), nl, write(Y),nl, nl,
