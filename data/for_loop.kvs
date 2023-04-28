@@ -1,0 +1,11 @@
+start
+{
+
+
+for(int a=20;a>0;a=a-2)
+{
+print a;
+}
+
+}
+end
