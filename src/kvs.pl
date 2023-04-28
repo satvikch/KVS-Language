@@ -4,7 +4,7 @@ kvs(Lexername, Filename) :-
     term_to_atom(Y, X),
     write('KVS Programming Language v1.0'), nl,
     write('SER 502 - Spring 2023 - Team 28'), nl,
-    write('@Authors - Vedasree Bodavula, Satvik Chemudupati, Kavya Alla, Sai Sunil Neralla'), nl, nl,
+    write('@Authors - Vedasree Bodavula, Satvik Chemudupati, Kavya Alla, Sunil'), nl, nl,
     program(Tree, Y, []),
     write('Executing......'), write(Filename), nl, nl,
     write('List of Tokens:'), nl, write(Y),nl, nl,
@@ -15,7 +15,7 @@ kvs(Lexername, Filename) :-
 :- table boolean/3, expression/3, term/3.
 
 %-------------------------------------------------------to parse the program-------------------------------------
-program(t_program(A)) -->['start'], block(A), ['end'].
+program(t_program(A)) -->['start'], block(A), ['terminate'].
 
 %-------------------------------------------------------to parse the block--------------------------------------- 
 block(t_block(A)) --> ['{'], block_section(A), ['}']. 
@@ -87,6 +87,7 @@ boolean(t_bool_or(X, Y)) --> condition(X), ['or'], condition(Y).
 printstatements(t_display(X)) --> ['print'], identifier(X).
 printstatements(t_display(X)) --> ['print'], num(X).
 printstatements(t_display(X)) --> ['print'], string(X).
+
 
 %----------------------------------------------------------------------to parse condition checks-----------------------------------------
 condition(t_condition(X, Y, Z)) --> expression(X), operator(Y), expression(Z).
@@ -376,7 +377,6 @@ evaluate_display(t_display(NumTree), Env, Env) :-
 evaluate_display(t_display(Str), Env, Env) :- 
     evaluate_str(Str, Env, Env, StrVal),
     writeln(StrVal).
-
 %-----------------------------------------------------------------------------------to evaluateuate if condition-------------------------------------------------
 
 if_evaluate(t_if_cond(Condition, IfBlock), Env, FinalEnv) :- 
