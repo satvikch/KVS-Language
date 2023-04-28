@@ -1,0 +1,17 @@
+start
+{
+int x = 0;
+int y = 1;
+int res = 0;
+
+while (counter < 10)
+{
+    int temp = x;
+    x = y;
+    y = temp + y;
+    print x;
+    counter = counter + 1;
+}
+print y;
+}
+end
