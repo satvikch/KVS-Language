@@ -1,14 +1,14 @@
 start
 {
-	string p = 'This';
-	string q = 'is';
-	string r = 'our';
-	string s = 'project 28';
-
-	print p;
-	print q;
-	print r;
-	print s;
-
+	int x=2;
+	int y=5;
+	int res=0;
+	while(res <= 500)
+	{
+		y = y * 2;
+		x = x + 2;
+		res = x * y;
+		print res;
+	}
 }
 terminate
