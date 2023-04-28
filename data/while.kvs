@@ -1,11 +1,14 @@
 start
 {
-	int a = 10;
-	while(a > 0)
-	{
-		print a;
-		a = (a*2);
-		a = a/4;
-	}
+	string p = 'This';
+	string q = 'is';
+	string r = 'our';
+	string s = 'project 28';
+
+	print p;
+	print q;
+	print r;
+	print s;
+
 }
 terminate
