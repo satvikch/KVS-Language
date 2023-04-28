@@ -1,7 +1,7 @@
 start
 {
 
-string p=This;
+string p=this;
 string q=is;
 string r=our;
 string s=project;
@@ -12,4 +12,4 @@ print r;
 print s;
 
 }
-end
+termiante
