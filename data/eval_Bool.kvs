@@ -1,16 +1,17 @@
 start
 {
-bool flag=true;
-int x=28;
-if (x>= 10)
-{
-x=x+2;
+	
+	bool temp = true;
+    int i=8;
+    if (i <= 10)
+    {
+        i=i+2;
+    }
+    else
+    {
+        temp = false;
+    }
+    print i;
+    print temp;
 }
-else
-{
-flag=false;
-}
-print x;
-print flag;
-}
-end
+terminate
