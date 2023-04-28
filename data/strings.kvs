@@ -1,15 +1,14 @@
 start
 {
+	string p = 'This';
+	string q = 'is';
+	string r = 'our';
+	string s = 'project 28';
 
-string p=this;
-string q=is;
-string r=our;
-string s=project;
-
-print p;
-print q;
-print r;
-print s;
+	print p;
+	print q;
+	print r;
+	print s;
 
 }
-termiante
+terminate
