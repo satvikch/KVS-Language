@@ -6,10 +6,10 @@ start
 	string r = 'our';
 	string s = 'project 28';
 
-	print p;
-	print q;
-	print r;
-	print s;
+	disp p;
+	disp q;
+	disp r;
+	disp s;
 
 }
 terminate
