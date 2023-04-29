@@ -2,18 +2,18 @@
 start
 {
 	string k = 'Values of I';
-	print k;
+	disp k;
 	
 	for(int i=1;i<=5;i++)
 	{
-		print i;
+		disp i;
 	}
 	string k1 = 'Values of J';
-	print k1;
+	disp k1;
 	
 	for(int j=5;j>=0;j--)
 	{
-		print j;
+		disp j;
 	}
 	
 
