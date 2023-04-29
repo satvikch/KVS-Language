@@ -32,6 +32,7 @@
 - SWI-Prolog Download ([Link 🦋](https://www.swi-prolog.org/Download.html))
 - Python3 Download ([Link 🦋](https://www.python.org/downloads/))
 - Sample test programs are saved in the 'data' folder with .kvs extension
+- The Lexer file and the kvs file are in the src folder.
 - Open the terminal and execute the below command
 ```
 > swipl
