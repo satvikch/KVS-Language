@@ -1,10 +1,20 @@
 start
 {
+	string k = 'Values of I';
+	print k;
+	
+	for(int i=1;i<=5;i++)
+	{
+		print i;
+	}
+	string k1 = 'Values of J';
+	print k1;
+	
+	for(int j=5;j>=0;j--)
+	{
+		print j;
+	}
+	
 
-for(int i=1;i<15;i++)
-{
-print i;
 }
-
-}
-end
+terminate
