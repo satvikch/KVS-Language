@@ -8,6 +8,6 @@ start
 		temp = temp * x;
 		x = x - 1;
 	 }
-	print temp;
+	disp temp;
 }
 terminate
