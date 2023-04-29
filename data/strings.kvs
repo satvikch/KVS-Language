@@ -1,10 +1,10 @@
 # Evaluating strings
 start
 {
-	string p = 'This';
-	string q = 'is';
-	string r = 'our';
-	string s = 'project 28';
+	str p = 'This';
+	str q = 'is';
+	str r = 'our';
+	str s = 'project 28';
 
 	disp p;
 	disp q;
