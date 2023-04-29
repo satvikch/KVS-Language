@@ -4,7 +4,7 @@ start
 	num x = 0;
 	num y = 1;
 	num res = 0;
-	string z = 'Fibonacci series for N = 10 is a follows :';
+	str z = 'Fibonacci series for N = 10 is a follows :';
 	disp z;
 	while (res < 10)
 	{
