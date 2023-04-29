@@ -1,8 +1,8 @@
 # kvs program to find the Factorial of a number(x)
 start
 {
-	 int temp = 1;
-	 int x=7;
+	 num temp = 1;
+	 num x=7;
 	 while(x > 0)
 	 {
 		temp = temp * x;
