@@ -1,14 +1,14 @@
 # Evaluate For loop along with Increment and Decrement Operators
 start
 {
-	string k = 'Values of I';
+	str k = 'Values of I';
 	disp k;
 	
 	for(int i=1;i<=5;i++)
 	{
 		disp i;
 	}
-	string k1 = 'Values of J';
+	str k1 = 'Values of J';
 	disp k1;
 	
 	for(int j=5;j>=0;j--)
