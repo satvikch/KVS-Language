@@ -6,7 +6,7 @@ INDIVIDUAL CONTRIBUTIONS FOR MILESTONE 1:
 *  Information about Interpreter - Sunil
 *  Gathered knowledge about Parser - Entire Team
 
-PROPOSED INDIVIDUALS CONTRIBUTIONS FOR MILESTONE 2:
+INDIVIDUALS CONTRIBUTIONS FOR MILESTONE 2:
 
 1. Will be working on Grammar Design – Veda, Kavya, Satvik, Sunil
 2. Setting up IDE – Satvik, Kavya
