@@ -1,17 +1,15 @@
 start
 {
+	int a = 5;
+	int b = 18;
 
-int a = 5;
-int b = 18;
-
-if(a != b) 
-{
-print a;
+	if(a != b) 
+	{
+		print a;
+	}
+	else
+	{
+		print b;
+	}
 }
-else
-{
-print b;
-}
-
-}
-end
+terminate
