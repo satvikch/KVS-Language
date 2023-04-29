@@ -1,14 +1,14 @@
 # Evaluating Fibonacci of a number (res)
 start
 {
-	int x = 0;
-	int y = 1;
-	int res = 0;
+	num x = 0;
+	num y = 1;
+	num res = 0;
 	string z = 'Fibonacci series for N = 10 is a follows :';
 	disp z;
 	while (res < 10)
 	{
-		int temp = x;
+		num temp = x;
 		x = y;
 		y = temp + y;
 		disp x;
