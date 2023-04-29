@@ -14,15 +14,18 @@ kvs(Lexername, Filename) :-
 %----------------------------------------------------------------------------------------------------------------
 :- table boolean/3, expression/3, term/3.
 
-%-------------------------------------------------------to parse the program-------------------------------------
+%-------------------------------------------------------------------------to parse the program---------------------------------------------------------------------
+
 program(t_program(A)) -->['start'], block(A), ['terminate'].
 
-%-------------------------------------------------------to parse the block--------------------------------------- 
+%---------------------------------------------------------------------------to parse the block----------------------------------------------------------------------
+
 block(t_block(A)) --> ['{'], block_section(A), ['}']. 
 block_section(t_block(A, B)) --> statements(A), block_section(B).
 block_section(t_block(A)) --> statements(A).
 
-%------------------------------------------to parse the different type of statements------------------------------ 
+%-------------------------------------------------------------------to parse the different type of statements--------------------------------------------------------
+
 statements(t_statements(X)) --> declaration(X), [;].
 statements(t_statements(X)) --> assignment(X), [;].
 statements(t_statements(X)) --> expression(X), [;].
@@ -35,45 +38,54 @@ statements(t_statements(X)) --> whileloop(X).
 statements(t_statements(X)) --> forrange(X).
 statements(t_statements(X)) --> iterator(X), [;].
 
-%-----------------------------------------------------to parse variable declaration----------------------------------
+%-------------------------------------------------------------------------to parse variable declaration----------------------------------------------------------------
+
 declaration(t_declareint(int, X, Y)) --> ['int'], identifier(X), ['='], expression(Y).
 declaration(t_declarestr(string, X, Y)) --> ['string'], identifier(X), ['='], string(Y).
 declaration(t_declarebool(bool, X, true)) --> ['bool'], identifier(X), [=], ['true'].
 declaration(t_declarebool(bool, X, false)) --> ['bool'], identifier(X), [=], ['false'].
 declaration(t_declare(X, Y)) --> type(X), identifier(Y).
 
-%--------------------------------------------------------to parse assignment operation--------------------------------
+%--------------------------------------------------------------------------to parse assignment operation----------------------------------------------------------------
+
 assignment(t_assign(X, Y)) --> identifier(X), ['='], expression(Y).
 assignment(t_assign(X, Y)) --> identifier(X), ['='], boolean(Y).
 
-%-------------------------------------------------------------------to parse datatype----------------------------------
+%-------------------------------------------------------------------------------to parse datatype-----------------------------------------------------------------------
+
 type(int) --> ['int'].
 type(string) --> ['string'].
 type(bool) --> ['bool'].
 
-%------------------------------------------------------------to parse whileloop---------------------------------------
+%-------------------------------------------------------------------------------to parse whileloop-----------------------------------------------------------------------
+
 whileloop(t_whileloop(A, B)) --> ['while'], ['('], (condition(A);boolean(A)), [')'], block(B).
 
-%---------------------------------------------------------------to parse forloop-----------------------------------------
+%--------------------------------------------------------------------------------to parse forloop------------------------------------------------------------------------
+
 forloop(t_forloop(A, B, C, D)) --> ['for'], ['('], declaration(A), [';'], (condition(B);boolean(B)), [';'], iterator(C), [')'], block(D).
 forloop(t_forloop(A, B, C, D)) --> ['for'], ['('], declaration(A), [';'], (condition(B);boolean(B)), [';'], assignment(C), [')'], block(D).
 forloop(t_forloop(A, B, C, D)) --> ['for'], ['('], assignment(A), [';'], (condition(B);boolean(B)), [';'], iterator(C), [')'], block(D).
 forloop(t_forloop(A, B, C, D)) --> ['for'], ['('], assignment(A), [';'], (condition(B);boolean(B)), [';'], expression(C), [')'], block(D).
 
-%-------------------------------------------------------------------to parse forrange----------------------------------------------------
+%--------------------------------------------------------------------------------to parse forrange------------------------------------------------------------------------
+
 forrange(t_forrange(A, B, C, D)) --> ['for'], identifier(A), ['in'], ['range'], ['('], num(B), [':'], num(C), [')'], block(D).
 forrange(t_forrange(A, B, C, D)) --> ['for'], identifier(A), ['in'], ['range'], ['('], identifier(B), [':'], identifier(C), [')'], block(D).
 forrange(t_forrange(A, B, C, D)) --> ['for'], identifier(A), ['in'], ['range'], ['('], num(B), [':'], identifier(C), [')'], block(D).
 forrange(t_forrange(A, B, C, D)) --> ['for'], identifier(A), ['in'], ['range'], ['('], identifier(B), [':'], num(C), [')'], block(D).
 
-%-------------------------------------------------------------------to parse if condition-------------------------------------------------
+%-------------------------------------------------------------------------------to parse if condition---------------------------------------------------------------------
+
 ifcondition(t_if_cond(A, B)) --> ['if'], ['('], (condition(A);boolean(A)), [')'], block(B).
 ifcondition(t_if_cond(A, B, C)) --> ['if'], ['('], (condition(A);boolean(A)), [')'], block(B), ['else'], block(C).
 
-%---------------------------------------------------to parse ternary condition--------------------------------------------------------------
+%------------------------------------------------------------------------------to parse ternary condition------------------------------------------------------------------
+
 ternarycondition(t_tern_cond(A, B, C)) --> (condition(A);boolean(A)), ['?'], statements(B), [':'], statements(C).
 
-%-------------------------------------------------------------------to parse the boolean expression------------------------------------------
+%----------------------------------------------------------------------------to parse the boolean expression---------------------------------------------------------------
+
 boolean(true) --> ['true'].
 boolean(false) --> ['false'].
 boolean(t_bool_not(X)) --> ['not'],['('], boolean(X), [')'].
@@ -83,18 +95,20 @@ boolean(t_bool_and(X, Y)) --> condition(X), ['and'], condition(Y).
 boolean(t_bool_or(X, Y)) --> boolean(X), ['or'], boolean(Y).
 boolean(t_bool_or(X, Y)) --> condition(X), ['or'], condition(Y).
 
-%-------------------------------------------------------------------to parse print statements-------------------------------------------
-printstatements(t_display(X)) --> ['print'], identifier(X).
-printstatements(t_display(X)) --> ['print'], num(X).
-printstatements(t_display(X)) --> ['print'], string(X).
+%-------------------------------------------------------------------------------to parse print statements-------------------------------------------------------------------
 
+printstatements(t_display(X)) --> ['disp'], identifier(X).
+printstatements(t_display(X)) --> ['disp'], num(X).
+printstatements(t_display(X)) --> ['disp'], string(X).
 
-%----------------------------------------------------------------------to parse condition checks-----------------------------------------
+%--------------------------------------------------------------------------------to parse condition checks------------------------------------------------------------------
+
 condition(t_condition(X, Y, Z)) --> expression(X), operator(Y), expression(Z).
 condition(t_condition(X, Y, Z)) --> string(X), operator(Y), string(Z).
 condition(t_condition(X, Y, Z)) --> identifier(X), operator(Y), string(Z).
 
-%----------------------------------------------------------------to parse conditional operator---------------------------------------------
+%-------------------------------------------------------------------------------to parse conditional operator---------------------------------------------------------------
+
 operator(==) --> ['=='].
 operator('!=') --> ['!='].
 operator(>) --> ['>'].
@@ -102,7 +116,8 @@ operator(<) --> ['<'].
 operator(>=) --> ['>='].
 operator(<=) --> ['<='].
 
-%------------------------------------------------------------to parse addition ,subtraction,multiplication and division---------------------------
+%----------------------------------------------------------------to parse addition ,subtraction,multiplication and division-------------------------------------------------
+
 expression(t_add(X, Y)) --> expression(X), ['+'], term(Y).
 expression(t_sub(X, Y)) --> expression(X), ['-'], term(Y).
 expression(X) --> term(X).
@@ -112,11 +127,12 @@ term(X) --> ['('], expression(X), [')'].
 term(X) --> num(X).
 term(X) --> identifier(X).
 
-%-------------------------------------------------------------to parse unary increment and decrement operation--------------------------------------
+%-------------------------------------------------------------------to parse unary increment and decrement operation---------------------------------------------------------
+
 iterator(t_incre(X)) --> identifier(X), ['+'], ['+'] .
 iterator(t_decre(X)) --> identifier(X), ['-'], ['-'].
 
-%------------------------------------------------------------------to parse number, identifier, and string----------------------------------------------
+%-----------------------------------------------------------------------to parse number, identifier, and string---------------------------------------------------------------
 num(t_num(Y)) --> [Y], {number(Y)}.
 identifier(identifier(Y)) --> [Y], {atom(Y)}.
 string(Y) --> onlystring(Y).
@@ -139,7 +155,7 @@ or(false, false, false).
 
 %----------------------------------------------------------------------------------------------------------------
 
-%lookup predicate find the respective values from the environment
+%--------------------------------------------------------lookup predicate find the respective values from the environment---------------------------------------------------------
 
 lookup(Id, [(_Type, Id, Temp)|_], Temp).
 lookup(Id, [_|Tail], Temp) :- lookup(Id, Tail, Temp).
@@ -155,16 +171,19 @@ update(Type, Id, Val, [Head|Tail], [Head|Rest]) :- update(Type, Id, Val, Tail, R
 
 %----------------------------------------------------------------------------------------------------------------
 
-%to evaluateuate the program
+%---------------------------------------------------------------to evaluateuate the program---------------------------------------------------------------------------
+
 evaluate_program(t_program(X), FinalEnv) :- evaluate_block(X, [], FinalEnv), !.
 
-%-----------------------------------------------------------to evaluateuate the block---------------------------------------------------
+%----------------------------------------------------------------to evaluateuate the block----------------------------------------------------------------------------
+
 evaluate_block(t_block(X), Env, FinalEnv) :- evaluate_block_section(X, Env, FinalEnv).
 evaluate_block_section(t_block(X, Y), Env, FinalEnv) :- evaluate_statements(X, Env, Env1), 
     evaluate_block_section(Y, Env1, FinalEnv).
 evaluate_block_section(t_block(X), Env, FinalEnv) :- evaluate_statements(X, Env, FinalEnv).
 
-%-----------------------------------------------------------------------------------to evaluateuate the statements------------------------------------------------
+%-----------------------------------------------------------------------------------to evaluateuate the statements---------------------------------------------------
+
 evaluate_statements(t_statements(X), Env, FinalEnv) :- 
     evaluate_declare(X, Env, FinalEnv);
     evaluate_assign(X, Env, FinalEnv);
@@ -177,7 +196,8 @@ evaluate_statements(t_statements(X), Env, FinalEnv) :-
     evaluate_terncond(X, Env, FinalEnv);
     evaluate_iter(X, Env, FinalEnv).
 
-%-------------------------------------------------------------------------------to evaluateuate different types of declaration---------------------------------------
+%-------------------------------------------------------------------------------to evaluateuate different types of declaration-----------------------------------------
+
 evaluate_declare(t_declare(X, Y), Env, NewEnv):- 
     evaluate_char_tree(Y, Id),
     update(X, Id, _, Env, NewEnv).
@@ -200,7 +220,8 @@ evaluate_declare(t_declarebool(bool, Y, false), Env, NewEnv):-
     evaluate_char_tree(Y, Id),
     update(bool, Id, false, Env, NewEnv).
 
-%------------------------------------------------------------------to evaluateuate the assignment operation------------------------------------------------------
+%----------------------------------------------------------------------to evaluateuate the assignment operation---------------------------------------------------------
+
 evaluate_assign(t_assign(Var, Expr), Env, NewEnv) :- 
     evaluate_expr(Expr, Env, Env1, Value),
     check_type(Value, Type),
@@ -225,7 +246,8 @@ evaluate_assign(t_assign(Var, Expr), Env, NewEnv) :-
     Type =@= VarType,
     update(Type, Id, Value, Env, NewEnv).
 
-%-------------------------------------------------------------to evaluateuate boolean condition------------------------------------------------------------
+%--------------------------------------------------------------------to evaluateuate boolean condition-----------------------------------------------------------------------
+
 evaluate_boolean(true, _Env1, _NewEnv, true).
 evaluate_boolean(false, _Env1, _NewEnv,false).
 
@@ -254,7 +276,8 @@ evaluate_boolean(t_bool_or(BoolExpr1, BoolExpr2), Env, NewEnv, Val) :-
     evaluate_condition(BoolExpr2, Env, NewEnv, Val2),
     or(Val1, Val2, Val).
 
-%--------------------------------------------------------------------to evaluateuate conditional operation---------------------------------------------
+%----------------------------------------------------------------------------to evaluateuate conditional operation----------------------------------------------------------
+
 evaluate_condition(t_condition(X, ==, Y), Env, NewEnv, Val) :- 
     evaluate_expr(X, Env, NewEnv, Val1),
     evaluate_expr(Y, Env, NewEnv, Val2),
@@ -363,7 +386,7 @@ evaluate_condition(t_condition(X,'<=',Y), Env, NewEnv,_Val) :-
     evaluate_str(Y, Env, NewEnv,_Val2),
     write("invalid operation").
 
-%--------------------------------------------------------to evaluateuate the display statement-----------------------------------------
+%------------------------------------------------------------------------------to evaluateuate the display statement------------------------------------------------------
 
 evaluate_display(t_display(CharTree), Env, Env) :- 
     evaluate_char_tree(CharTree, CharTreeId),
@@ -377,7 +400,8 @@ evaluate_display(t_display(NumTree), Env, Env) :-
 evaluate_display(t_display(Str), Env, Env) :- 
     evaluate_str(Str, Env, Env, StrVal),
     writeln(StrVal).
-%-----------------------------------------------------------------------------------to evaluateuate if condition-------------------------------------------------
+%-----------------------------------------------------------------------------------to evaluateuate if condition----------------------------------------------------------
+
 
 if_evaluate(t_if_cond(Condition, IfBlock), Env, FinalEnv) :- 
     ((evaluate_condition(Condition, Env, NewEnv, true);evaluate_boolean(Condition, Env, NewEnv, true)),
@@ -394,7 +418,8 @@ if_evaluate(t_if_cond(Condition, _IfBlock, EBlock), Env, FinalEnv) :-
     (evaluate_condition(Condition, Env, NewEnv, false); evaluate_boolean(Condition, Env, NewEnv, false)),
     evaluate_block(EBlock, NewEnv, FinalEnv).	
 
-%----------------------------------------------------------------------to evaluateuate the while loop----------------------------------------------------------------
+%------------------------------------------------------------------------------to evaluateuate the while loop----------------------------------------------------------------
+
 
 evaluate_while(t_whileloop(Condition, Body), Env, FinalEnv) :- 
     evaluate_boolean(Condition, Env, NewEnv, true),
@@ -412,7 +437,7 @@ evaluate_while(t_whileloop(Condition, Body), Env, FinalEnv) :-
 evaluate_while(t_whileloop(Condition, _Body), Env, Env) :- 
     evaluate_condition(Condition, Env, Env, false).
 
-%-------------------------------------------------------------------------to evaluateuate the forloop---------------------------------------------------------------
+%---------------------------------------------------------------------------to evaluateuate the forloop----------------------------------------------------------------------
 
 evaluate_forloop(t_forloop(Declaration, Condition, Iteration, Block), Env, FinalEnv):- 
     evaluate_declare(Declaration, Env, NewEnv1),
@@ -440,7 +465,8 @@ loops(Boolean, Iteration, Block, Env, FinalEnv) :-
 loops(Boolean, _, _, Env, Env) :- 
     evaluate_boolean(Boolean, Env, Env, false).
 
-%----------------------------------------------------------------------------to evaluateuate the forrange------------------------------------------------------
+%----------------------------------------------------------------------------to evaluateuate the forrange----------------------------------------------------------------------
+
 evaluate_forrange(t_forrange(Variable, Start, End, Block), Env, FinalEnv) :-
     evaluate_char_tree(Variable, VariableId),
     (
@@ -465,7 +491,7 @@ looping(VariableId, EndVal, _, Env, Env) :-
     lookup(VariableId, Env, CurrentVal),
     CurrentVal >= EndVal.	
 
-%--------------------------------------------------------------------------to evaluateuate ternary condition----------------------------------------------------------
+%--------------------------------------------------------------------------to evaluateuate ternary condition--------------------------------------------------------------------
 
 evaluate_terncond(t_tern_cond(Condition, TrueStatements, _FalseStatements), Env, FinalEnv):- 
     (evaluate_condition(Condition, Env, NewEnv, true);evaluate_boolean(Condition, Env, NewEnv, true)),
@@ -475,7 +501,7 @@ evaluate_terncond(t_tern_cond(Condition, _TrueStatements, FalseStatements), Env,
     (evaluate_condition(Condition, Env, NewEnv, false);evaluate_boolean(Condition, Env, NewEnv, false)),
     evaluate_statements(FalseStatements, NewEnv, FinalEnv).
 
-%----------------------------------------------------------------to evaluateuate the increment,decrement operation-----------------------------------------------------
+%----------------------------------------------------------------to evaluateuate the increment,decrement operation--------------------------------------------------------------
 
 evaluate_iter(t_incre(Variable), Env, NewEnv) :- 
     evaluate_char_tree(Variable, VariableId),
@@ -491,7 +517,7 @@ evaluate_iter(t_decre(Variable), Env, NewEnv) :-
     NewVariablevaluateue is Variablevaluateue - 1, 
     update(int, VariableId, NewVariablevaluateue, Env, NewEnv).
 
-%--------------------------------------------------------------to evaluateuate addition,subtraction,multiplication and division----------------------------------------
+%-----------------------------------------------------------------to evaluateuate addition,subtraction,multiplication and division-----------------------------------------------
 
 evaluate_expr(X, Env, NewEnv) :- 
     evaluate_assign(X, Env, NewEnv).
@@ -534,7 +560,7 @@ evaluate_term3(X,  Env, NewEnv, Val) :-
 evaluate_term3(t_parentheses(X), Env, NewEnv, Val):-
     evaluate_expr(X, Env, NewEnv, Val).
 
-%--------------------------------------------------------to evaluateuate the number and string------------------------------------------------------------------------
+%----------------------------------------------------------------to evaluateuate the number and string------------------------------------------------------------------------
 
 evaluate_num(t_num(Val), Env, Env, Val).
 
