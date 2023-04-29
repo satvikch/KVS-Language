@@ -5,13 +5,13 @@ start
 	int y = 1;
 	int res = 0;
 	string z = 'Fibonacci series for N = 10 is a follows :';
-	print z;
+	disp z;
 	while (res < 10)
 	{
 		int temp = x;
 		x = y;
 		y = temp + y;
-		print x;
+		disp x;
 		res = res + 1;
 	}
 }
