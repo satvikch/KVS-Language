@@ -41,7 +41,7 @@ statements(t_statements(X)) --> iterator(X), [;].
 %-------------------------------------------------------------------------to parse variable declaration----------------------------------------------------------------
 
 declaration(t_declareint(num, X, Y)) --> ['num'], identifier(X), ['='], expression(Y).
-declaration(t_declarestr(string, X, Y)) --> ['string'], identifier(X), ['='], string(Y).
+declaration(t_declarestr(str, X, Y)) --> ['str'], identifier(X), ['='], string(Y).
 declaration(t_declarebool(bool, X, true)) --> ['bool'], identifier(X), [=], ['true'].
 declaration(t_declarebool(bool, X, false)) --> ['bool'], identifier(X), [=], ['false'].
 declaration(t_declare(X, Y)) --> type(X), identifier(Y).
@@ -54,7 +54,7 @@ assignment(t_assign(X, Y)) --> identifier(X), ['='], boolean(Y).
 %-------------------------------------------------------------------------------to parse datatype-----------------------------------------------------------------------
 
 type(num) --> ['num'].
-type(string) --> ['string'].
+type(str) --> ['str'].
 type(bool) --> ['bool'].
 
 %-------------------------------------------------------------------------------to parse whileloop-----------------------------------------------------------------------
@@ -138,7 +138,7 @@ identifier(identifier(Y)) --> [Y], {atom(Y)}.
 string(Y) --> onlystring(Y).
 onlystring(t_str(Y)) --> [Y], {atom(Y)}.
 
-check_type(Val, Temp) :- string(Val), Temp = string.
+check_type(Val, Temp) :- string(Val), Temp = str.
 check_type(Val, Temp) :- integer(Val), Temp = num.
 check_type(Val, Temp) :- (Val = true ; Val = false), Temp = bool.
 
@@ -207,10 +207,10 @@ evaluate_declare(t_declareint(num, Y, Z), Env, NewEnv):-
     evaluate_expr(Z, Env, Env1, Val),
     update(num, Id, Val, Env1, NewEnv).
 	
-evaluate_declare(t_declarestr(string, Y, Z), Env, NewEnv):- 
+evaluate_declare(t_declarestr(str, Y, Z), Env, NewEnv):- 
     evaluate_char_tree(Y, Id),
     evaluate_str(Z, Env, NewEnv1, Val),
-    update(string, Id, Val, NewEnv1, NewEnv).
+    update(str, Id, Val, NewEnv1, NewEnv).
 	
 evaluate_declare(t_declarebool(bool, Y, true), Env, NewEnv):- 
     evaluate_char_tree(Y, Id),
@@ -342,7 +342,7 @@ evaluate_condition(t_condition(X,==,Y), Env, NewEnv, Val) :-
     evaluate_char_tree(X,Id),
     lookup(Id, Env, Val1),
     check_type(Val1,T),
-    T=string,
+    T=str,
     evaluate_str(Y, Env, NewEnv, Val2),
     ((Val1 =@= Val2, Val = true);(\+(Val1 =@= Val2), Val = false)).
 	
@@ -350,7 +350,7 @@ evaluate_condition(t_condition(X,'!=',Y), Env, NewEnv, Val) :-
     evaluate_char_tree(X,Id),
     lookup(Id, Env, Val1),
     check_type(Val1,T),
-    T=string,
+    T=str,
     evaluate_str(Y, Env, NewEnv, Val2),
     ((Val1 = Val2, Val = false);(\+(Val1 = Val2), Val = true)).
 	
@@ -358,7 +358,7 @@ evaluate_condition(t_condition(X,'>',Y), Env, NewEnv,_Val) :-
     evaluate_char_tree(X,Id),
     lookup(Id, Env, Val1),
     check_type(Val1,T),
-    T=string,
+    T=str,
     evaluate_str(Y, Env, NewEnv,_Val2),
     write("invalid operation").
 	
@@ -366,7 +366,7 @@ evaluate_condition(t_condition(X,'<',Y), Env, NewEnv,_Val) :-
     evaluate_char_tree(X,Id),
     lookup(Id, Env, Val1),
     check_type(Val1,T),
-    T=string,
+    T=str,
     evaluate_str(Y, Env, NewEnv,_Val2),
     write("invalid operation").
 	
@@ -374,7 +374,7 @@ evaluate_condition(t_condition(X,'>=',Y), Env, NewEnv,_Val) :-
     evaluate_char_tree(X,Id),
     lookup(Id, Env, Val1),
     check_type(Val1,T),
-    T=string,
+    T=str,
     evaluate_str(Y, Env, NewEnv,_Val2),
     write("invalid operation").
 	
@@ -382,7 +382,7 @@ evaluate_condition(t_condition(X,'<=',Y), Env, NewEnv,_Val) :-
     evaluate_char_tree(X,Id),
     lookup(Id, Env, Val1),
     check_type(Val1,T),
-    T=string,
+    T=str,
     evaluate_str(Y, Env, NewEnv,_Val2),
     write("invalid operation").
 
