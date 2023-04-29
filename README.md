@@ -23,7 +23,7 @@
 
 ##  Project Video Link
 
-- Youtube Video Link - ([Link 🦋](https://youtu.be/uImD-TqQp1M)
+- Youtube Video Link - ([Link 🦋](https://youtu.be/uImD-TqQp1M))
 
 ## ⚒️ How to Execute it
 
