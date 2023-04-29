@@ -9,7 +9,7 @@ start
 		y = y * 2;
 		x = x + 2;
 		res = x * y;
-		print res;
+		disp res;
 	}
 }
 terminate
