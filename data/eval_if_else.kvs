@@ -1,8 +1,8 @@
 #Evaluating if-else Loop
 start
 {
-	int a = 5;
-	int b = 18;
+	num a = 5;
+	num b = 18;
 
 	if(a != b) 
 	{
