@@ -1,17 +1,17 @@
 start
 {
-int x = 0;
-int y = 1;
-int res = 0;
-
-while (counter < 10)
-{
-    int temp = x;
-    x = y;
-    y = temp + y;
-    print x;
-    counter = counter + 1;
+	int x = 0;
+	int y = 1;
+	int res = 0;
+	string z = 'Fibonacci series for N = 10 is a follows :';
+	print z;
+	while (res < 10)
+	{
+		int temp = x;
+		x = y;
+		y = temp + y;
+		print x;
+		res = res + 1;
+	}
 }
-print y;
-}
-end
+terminate
