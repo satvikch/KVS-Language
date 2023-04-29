@@ -4,14 +4,14 @@ start
 	str k = 'Values of I';
 	disp k;
 	
-	for(int i=1;i<=5;i++)
+	for(num i=1;i<=5;i++)
 	{
 		disp i;
 	}
 	str k1 = 'Values of J';
 	disp k1;
 	
-	for(int j=5;j>=0;j--)
+	for(num j=5;j>=0;j--)
 	{
 		disp j;
 	}
