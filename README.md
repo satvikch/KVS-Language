@@ -14,6 +14,9 @@
 3. 👩🏻‍💻 Kavya Alla
 4. 👨🏻‍💻 Sai Sunil Neralla
 
+System:
+Windows Machine
+
 ## ⚙ Tools Used
 - SWI Prolog (Compilation) 
 - Python 3.9 (Tokens) 
