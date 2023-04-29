@@ -1,9 +1,9 @@
 # Evaluating While loop
 start
 {
-	int x=2;
-	int y=5;
-	int res=0;
+	num x=2;
+	num y=5;
+	num res=0;
 	while(res <= 500)
 	{
 		y = y * 2;
