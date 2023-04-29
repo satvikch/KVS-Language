@@ -1,0 +1,15 @@
+start
+{
+	int a = 10;
+	int b = 20;
+	bool m = false;
+	if(a>5 and b>5)
+	{
+		if(not(a < 20 or b<20))
+		{
+			m = true;
+		}
+	}
+	print m;
+}
+terminate
