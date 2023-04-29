@@ -12,7 +12,7 @@ start
     {
         temp = false;
     }
-    print i;
-    print temp;
+    disp i;
+    disp temp;
 }
 terminate
