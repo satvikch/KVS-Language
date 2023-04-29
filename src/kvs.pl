@@ -40,7 +40,7 @@ statements(t_statements(X)) --> iterator(X), [;].
 
 %-------------------------------------------------------------------------to parse variable declaration----------------------------------------------------------------
 
-declaration(t_declareint(int, X, Y)) --> ['int'], identifier(X), ['='], expression(Y).
+declaration(t_declareint(num, X, Y)) --> ['num'], identifier(X), ['='], expression(Y).
 declaration(t_declarestr(string, X, Y)) --> ['string'], identifier(X), ['='], string(Y).
 declaration(t_declarebool(bool, X, true)) --> ['bool'], identifier(X), [=], ['true'].
 declaration(t_declarebool(bool, X, false)) --> ['bool'], identifier(X), [=], ['false'].
@@ -53,7 +53,7 @@ assignment(t_assign(X, Y)) --> identifier(X), ['='], boolean(Y).
 
 %-------------------------------------------------------------------------------to parse datatype-----------------------------------------------------------------------
 
-type(int) --> ['int'].
+type(num) --> ['num'].
 type(string) --> ['string'].
 type(bool) --> ['bool'].
 
@@ -139,7 +139,7 @@ string(Y) --> onlystring(Y).
 onlystring(t_str(Y)) --> [Y], {atom(Y)}.
 
 check_type(Val, Temp) :- string(Val), Temp = string.
-check_type(Val, Temp) :- integer(Val), Temp = int.
+check_type(Val, Temp) :- integer(Val), Temp = num.
 check_type(Val, Temp) :- (Val = true ; Val = false), Temp = bool.
 
 not(true, false).
@@ -202,10 +202,10 @@ evaluate_declare(t_declare(X, Y), Env, NewEnv):-
     evaluate_char_tree(Y, Id),
     update(X, Id, _, Env, NewEnv).
 	
-evaluate_declare(t_declareint(int, Y, Z), Env, NewEnv):- 
+evaluate_declare(t_declareint(num, Y, Z), Env, NewEnv):- 
     evaluate_char_tree(Y, Id),
     evaluate_expr(Z, Env, Env1, Val),
-    update(int, Id, Val, Env1, NewEnv).
+    update(num, Id, Val, Env1, NewEnv).
 	
 evaluate_declare(t_declarestr(string, Y, Z), Env, NewEnv):- 
     evaluate_char_tree(Y, Id),
@@ -470,8 +470,8 @@ loops(Boolean, _, _, Env, Env) :-
 evaluate_forrange(t_forrange(Variable, Start, End, Block), Env, FinalEnv) :-
     evaluate_char_tree(Variable, VariableId),
     (
-        (evaluate_numtree(Start, StartVal), update(int, VariableId, StartVal, Env, NewEnv));
-        (lookup(Start, Env, StartVal), update(int, VariableId, StartVal, Env, NewEnv))
+        (evaluate_numtree(Start, StartVal), update(num, VariableId, StartVal, Env, NewEnv));
+        (lookup(Start, Env, StartVal), update(num, VariableId, StartVal, Env, NewEnv))
     ),
     (
         (evaluate_numtree(End, EndVal));
@@ -484,7 +484,7 @@ looping(VariableId, EndVal, Block, Env, FinalEnv) :-
     CurrentVal < EndVal,
     evaluate_block(Block, Env, NewEnv),
     NextVal is CurrentVal + 1,
-    update(int, VariableId, NextVal, NewEnv, NewEnv1),
+    update(num, VariableId, NextVal, NewEnv, NewEnv1),
     looping(VariableId, EndVal, Block, NewEnv1, FinalEnv).
 
 looping(VariableId, EndVal, _, Env, Env) :-
@@ -505,17 +505,17 @@ evaluate_terncond(t_tern_cond(Condition, _TrueStatements, FalseStatements), Env,
 
 evaluate_iter(t_incre(Variable), Env, NewEnv) :- 
     evaluate_char_tree(Variable, VariableId),
-    lookup_type(VariableId, Env, int),
+    lookup_type(VariableId, Env, num),
     lookup(VariableId, Env, Variablevaluateue),
     NewVariablevaluateue is Variablevaluateue + 1, 
-    update(int, VariableId, NewVariablevaluateue, Env, NewEnv).
+    update(num, VariableId, NewVariablevaluateue, Env, NewEnv).
 
 evaluate_iter(t_decre(Variable), Env, NewEnv) :- 
     evaluate_char_tree(Variable, VariableId),
-    lookup_type(VariableId, Env, int),
+    lookup_type(VariableId, Env, num),
     lookup(VariableId, Env, Variablevaluateue),
     NewVariablevaluateue is Variablevaluateue - 1, 
-    update(int, VariableId, NewVariablevaluateue, Env, NewEnv).
+    update(num, VariableId, NewVariablevaluateue, Env, NewEnv).
 
 %-----------------------------------------------------------------to evaluateuate addition,subtraction,multiplication and division-----------------------------------------------
 
