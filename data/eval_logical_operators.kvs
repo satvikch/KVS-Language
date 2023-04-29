@@ -1,8 +1,8 @@
 # Evaluating Logical Operators
 start
 {
-	int a = 10;
-	int b = 20;
+	num a = 10;
+	num b = 20;
 	bool m = false;
 	if(a>5 and b>5)
 	{
