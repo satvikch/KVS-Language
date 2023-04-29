@@ -1,3 +1,4 @@
+# Evaluating strings
 start
 {
 	string p = 'This';
