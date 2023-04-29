@@ -7,7 +7,7 @@ start
 		int b = a;
 		while(b > 0)
 		{
-			print b;
+			disp b;
 			b = b - 1;
 		}
 	}
