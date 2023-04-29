@@ -11,6 +11,6 @@ start
 			m = true;
 		}
 	}
-	print m;
+	disp m;
 }
 terminate
