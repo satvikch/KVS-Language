@@ -1,9 +1,9 @@
 # Arithmatic operators
 start
 {
-	int a = 8/2/2;
-	int b = 8*2*2;
-	int c = 8*2+3-6;
+	num a = 8/2/2;
+	num b = 8*2*2;
+	num c = 8*2+3-6;
 	disp a;
 	disp b;
 	disp c;
