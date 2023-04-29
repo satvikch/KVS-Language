@@ -1,7 +1,7 @@
 # Evaluating For-Range loop
 start
 {
-	string s = '3rd Table using for_range';
+	str s = '3rd Table using for_range';
 	disp s;
 	for i in range(0:11)
 	{		
