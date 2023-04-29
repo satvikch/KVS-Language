@@ -10,7 +10,7 @@
 1. 👨🏻‍💻 Vedasree Bodavula
 2. 👩🏻‍💻 Satvik Chemudupati
 3. 👩🏻‍💻 Kavya Alla
-4. 👨🏻‍💻 Sunil
+4. 👨🏻‍💻 Sai Sunil Neralla
 
 ## ⚙ Tools Used
 - SWI-Prolog Desktop Application
