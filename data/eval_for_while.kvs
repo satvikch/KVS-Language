@@ -2,9 +2,9 @@
 start
 {
 
-	for (int a=0; a<3;a++)
+	for (num a=0; a<3;a++)
 	{
-		int b = a;
+		num b = a;
 		while(b > 0)
 		{
 			disp b;
