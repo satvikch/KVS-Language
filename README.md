@@ -6,7 +6,7 @@
 
 
 
-### KVS is a simple programming language developed to compute trivial arithmetic operations, conditions, and loops.
+### KVS Language, a simple programming language with all the necessary functionalities like arithmetic operations, conditions, and loops created using Prolog and Python.
 
 #### Team Members:
 1. 👨🏻‍💻 Vedasree Bodavula
@@ -15,30 +15,34 @@
 4. 👨🏻‍💻 Sai Sunil Neralla
 
 ## ⚙ Tools Used
-- SWI-Prolog Desktop Application
-- Python3
+- SWI Prolog (Compilation) 
+- Python 3.9 (Tokens) 
+- SWI Prolog (Parser) 
+- SWI Prolog (Interpreter)
 
-## 🕶 Project Video Link
 
-- Youtube Video Link - ([Link 🚀]
+##  Project Video Link
 
-## ⚙ How to Execute it
+- Youtube Video Link - ([Link 🦋]
 
-- Clone the git repository into your local machine
-- Install python 3.9 or above and SWI-Prolog 8.3.22 on your local machine
-- SWI-Prolog Download ([Link 🚀](https://www.swi-prolog.org/Download.html))
-- Python3 Download ([Link 🚀](https://www.python.org/downloads/))
+## ⚒️ How to Execute it
+
+- Clone the git repository into your local machine.
+- Install python 3.7 or above and the latest SWI-Prolog on your local machine.
+- SWI-Prolog Download ([Link 🦋](https://www.swi-prolog.org/Download.html))
+- Python3 Download ([Link 🦋](https://www.python.org/downloads/))
 - Sample test programs are saved in the 'data' folder with .kvs extension
 - Open the terminal and execute the below command
 ```
-User-MacBook:~ user$ swipl
+> swipl
 ```
-- Enter the path to the .pl file
+- Enter the path to the .pl file in the system
 ```
-?- ['C:/Users/schemudu/Documents/SER502-Team28/src/kvs.pl']. 
+> ['C:/Users/schemudu/Documents/SER502-Team28/src/kvs.pl']. %%(Path to the .pl file)%%
 ```
-- Run the sample program by parsing tokens through a lexer
+- Run the sample program by parsing the code for tokens through a lexer
 ```
-?- kvs('C:/Users/schemudu/Documents/SER502-Team28/src/Lexer.py','C:/Users/schemudu/Documents/SER502-Team28/data/eval_Bool.kvs').
+> kvs('C:/Users/schemudu/Documents/SER502-Team28/src/Lexer.py','C:/Users/schemudu/Documents/SER502-Team28/data/eval_Bool.kvs'). 
+%%(Path to the Lexer file and Path to the sample .kvs file)%%
 ```
 
