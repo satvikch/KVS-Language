@@ -8,10 +8,10 @@ INDIVIDUAL CONTRIBUTIONS FOR MILESTONE 1:
 
 INDIVIDUALS CONTRIBUTIONS FOR MILESTONE 2:
 
-1. Will be working on Grammar Design – Veda, Kavya, Satvik, Sunil
+1. Worked on Grammar Design – Veda, Kavya, Satvik, Sunil
 2. Setting up IDE – Satvik, Kavya
-3. Creating the Lexer and Parser integration – Veda, Sunil
-4. Working with Compiler and constants – Veda, Satvik
+3. Created the Lexer and Parser integration – Veda, Sunil
+4. Worked with Compiler and constants – Veda, Satvik
 5. Run-time execution and unit testing – Sunil, Kavya 
 6. Integrating all files – Veda, Kavya, Satvik, Sunil
 7. Creation of Sample programs and testing- Veda, Kavya
