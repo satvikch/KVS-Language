@@ -6,8 +6,8 @@ start
 	{
 		for (int b=a*2; b>=0;b = b-2)
 		{
-			print a;
-			print b;
+			disp a;
+			disp b;
 		}
 	}
 
