@@ -2,7 +2,7 @@
 start
 {
 	bool temp = true;
-    int i=8;
+    num i=8;
 	i<=10?i=i+2;:temp=false;; 
     disp i;
     disp temp;
