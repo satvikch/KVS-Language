@@ -36,3 +36,8 @@ def lexer(file_path):
                             result += f'{tokval},'
     result = result.rstrip(',') + ']'
     return result
+    
+if __name__ == '__main__':
+    file_path = sys.argv[1]
+    tokens = lexer(file_path)
+    print(tokens)
