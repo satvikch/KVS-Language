@@ -1,7 +1,9 @@
-# 🦈 KVS Programming Language
+#🦚 KVS Programming Language
 # SER 502 Spring 2023 - Project Team 28
 
-[![N|Solid](http://eu.swi-prolog.org/icons/swipl.png)](http://eu.swi-prolog.org/icons/swipl.png)
+<img src="https://user-images.githubusercontent.com/112653251/235284216-559955d9-d1cb-4987-a5a8-337b09b8ebf2.jpg"
+     width="200" height="100" />
+
 
 
 ### KVS is a simple programming language developed to compute trivial arithmetic operations, conditions, and loops.
