@@ -18,7 +18,7 @@
 
 ## 🕶 Project Video Link
 
-- Youtube Video Link - ([Link 🚀](https://youtu.be/MsYPDBumuR8))
+- Youtube Video Link - ([Link 🚀]
 
 ## ⚙ How to Execute it
 
