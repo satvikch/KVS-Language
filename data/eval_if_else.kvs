@@ -6,11 +6,11 @@ start
 
 	if(a != b) 
 	{
-		print a;
+		disp a;
 	}
 	else
 	{
-		print b;
+		disp b;
 	}
 }
 terminate
