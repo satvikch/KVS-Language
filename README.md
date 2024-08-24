@@ -4,7 +4,7 @@
 
 
 
-### KVS Language, a simple programming language with all the necessary functionalities like arithmetic operations, conditions, and loops created using Prolog and Python.
+### KVS Language is a simple programming language with all the necessary functionalities like arithmetic operations, conditions, and loops created using Prolog and Python.
 
 #### Team Members:
 1. 👨🏻‍💻 Vedasree Bodavula
@@ -29,10 +29,10 @@ Windows Machine
 ## ⚒️ How to Execute it
 
 - Clone the git repository into your local machine.
-- Install python 3.7 or above and the latest SWI-Prolog on your local machine.
+- Install Python 3.7 or above and the latest SWI-Prolog on your local machine.
 - SWI-Prolog Download ([Link 🦋](https://www.swi-prolog.org/Download.html))
 - Python3 Download ([Link 🦋](https://www.python.org/downloads/))
-- Sample test programs are saved in the 'data' folder with .kvs extension
+- Sample test programs are saved in the 'data' folder with the .kvs extension
 - The Lexer file and the kvs file are in the src folder.
 - Open the terminal and execute the below command
 ```
